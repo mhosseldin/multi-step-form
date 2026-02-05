@@ -4,40 +4,40 @@
   ===================== */
 
   /* Primary */
-  --clr-primary-900: hsl(213, 96%, 18%); /* Marine Blue - Dark navy */
-  --clr-primary-600: hsl(243, 100%, 62%); /* Purplish Blue - Main accent */
-  --clr-primary-300: hsl(228, 100%, 84%); /* Pastel Blue - Light accent */
-  --clr-primary-200: hsl(206, 94%, 87%); /* Light Blue - Hover/focus */
+  --clr-primary-900: hsl(213, 96%, 18%);
+  --clr-primary-600: hsl(243, 100%, 62%);
+  --clr-primary-300: hsl(228, 100%, 84%);
+  --clr-primary-200: hsl(206, 94%, 87%);
 
   /* Accent/Error */
-  --clr-accent-500: hsl(354, 84%, 57%); /* Strawberry Red - Errors/validation */
+  --clr-accent-500: hsl(354, 84%, 57%);
 
   /* Neutral */
-  --clr-neutral-900: hsl(213, 96%, 18%); /* Cool Gray - Headings */
-  --clr-neutral-500: hsl(231, 11%, 63%); /* Cool Gray - Body text */
-  --clr-neutral-200: hsl(229, 24%, 87%); /* Light Gray - Borders */
-  --clr-neutral-100: hsl(217, 100%, 97%); /* Magnolia - Page background */
-  --clr-neutral-50: hsl(231, 100%, 99%); /* Alabaster - Card background */
-  --clr-white: hsl(0, 0%, 100%); /* Pure white */
+  --clr-neutral-900: hsl(213, 96%, 18%);
+  --clr-neutral-500: hsl(231, 11%, 63%);
+  --clr-neutral-200: hsl(229, 24%, 87%);
+  --clr-neutral-100: hsl(217, 100%, 97%);
+  --clr-neutral-50: hsl(231, 100%, 99%);
+  --clr-white: hsl(0, 0%, 100%);
 
   /* =====================
      TYPOGRAPHY
   ===================== */
 
   --ff-base: "Ubuntu", system-ui, -apple-system, sans-serif;
-
-  --fs-base: 1rem; /* 16px base */
+  --fs-base: 1rem;
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-bold: 700;
-
-  --lh-base: 1.5; /* Comfortable line height */
+  --lh-base: 1.5;
 
   /* =====================
      SPACING
   ===================== */
 
-  --container-max-width: 90rem; /* 1440px */
+  --container-max-width: 62rem;
+  --border-radius: 10px;
+  --border-radius-lg: 12px;
 }
 
 /* =====================
@@ -91,10 +91,6 @@ fieldset {
   border: none;
 }
 
-legend {
-  padding: 0;
-}
-
 button {
   font-family: inherit;
   cursor: pointer;
@@ -103,6 +99,11 @@ button {
 input {
   font-family: inherit;
   font-size: inherit;
+}
+
+input::placeholder {
+  color: var(--clr-neutral-500);
+  opacity: 0.7;
 }
 
 /* =====================
@@ -128,185 +129,308 @@ input {
 }
 
 /* =====================
-   FORM
+   LAYOUT - FORM CONTAINER
 ===================== */
+
 .form-container {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
 }
-aside.sidebar-nav {
+
+/* =====================
+   SIDEBAR NAVIGATION
+===================== */
+
+.sidebar-nav {
   background-image: url(../assets/images/bg-sidebar-mobile.svg);
   background-position: top;
   background-size: cover;
-  min-height: 150px;
-}
-.sidebar-nav nav {
-  padding: 2em;
-}
-.sidebar-nav .steps {
-  list-style: none;
-}
-.sidebar-nav .steps li .step-indicator {
-  display: inline-block;
-  border-radius: 50%;
-  color: var(--clr-white);
-  width: 2em;
-  height: 2em;
-  border: 1px solid var(--clr-white);
-  text-align: center;
-  line-height: 2rem;
-}
-.sidebar-nav .steps li[aria-current="step"] .step-indicator {
-  background-color: var(--clr-primary-200);
-  color: var(--clr-primary-900);
+  background-repeat: no-repeat;
+  min-height: 172px;
 }
 
-.sidebar-nav .steps .step-info {
+.sidebar-nav nav {
+  padding: 2rem;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
+}
+
+.step-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--clr-white);
+  color: var(--clr-white);
+  font-weight: var(--fw-bold);
+  font-size: 0.875rem;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.steps li[aria-current="step"] .step-indicator {
+  background-color: var(--clr-primary-200);
+  color: var(--clr-primary-900);
+  border-color: var(--clr-primary-200);
+}
+
+.step-info {
   display: none;
 }
-.form-container form {
+
+.step-eyebrow {
+  font-size: 0.75rem;
+  color: var(--clr-primary-300);
+  letter-spacing: 0.05em;
+  font-weight: var(--fw-regular);
+}
+
+/* =====================
+   FORM
+===================== */
+
+form {
   display: flex;
   flex-direction: column;
   min-height: 100%;
 }
-.form-container form .form-body {
+
+.form-body {
   background-color: var(--clr-white);
-  padding: 2em 2em;
-  border-radius: 10px;
-  width: 90%;
-  margin: -5.3em auto 0;
+  padding: 2rem 1.5rem;
+  border-radius: var(--border-radius);
+  width: calc(100% - 2rem);
+  max-width: 450px;
+  margin: -4.5rem auto 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-.form-container form .form-step .step-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.2em;
+/* =====================
+   FORM STEPS
+===================== */
+
+.step-title {
+  font-size: 1.625rem;
+  margin-bottom: 0.5rem;
 }
 
-.form-container form .form-step .step-desc {
-  margin-bottom: 1em;
+.step-desc {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
 }
-.form-container form .form-step .form-field {
+
+/* =====================
+   FORM FIELDS
+===================== */
+
+.form-field {
   display: flex;
   flex-direction: column;
 }
-.form-container form .form-step .form-field:nth-of-type(2) {
-  margin: 1em 0;
+
+.form-field + .form-field {
+  margin-top: 1rem;
 }
-.form-container form .form-step .form-field label {
+
+.form-field label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  font-weight: 500;
+  font-weight: var(--fw-medium);
+  font-size: 0.875rem;
   color: var(--clr-neutral-900);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
-.form-container form .form-step .form-field .error-message {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--clr-accent-500);
-}
-.form-container form .form-step .form-field input {
+.form-field input {
   width: 100%;
-  padding: 0.9em 1em;
-  border-radius: 0.5em;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   border: 1px solid var(--clr-neutral-200);
   color: var(--clr-neutral-900);
+  font-weight: var(--fw-medium);
   outline: none;
+  transition: border-color 0.2s ease;
 }
-.form-container form .form-step .form-field input:focus {
+
+.form-field input:hover {
   border-color: var(--clr-primary-600);
 }
-.form-container form .form-step .form-field input[aria-invalid="true"],
-.form-container form .form-step .form-field input[aria-invalid="true"]:focus {
+
+.form-field input:focus {
+  border-color: var(--clr-primary-600);
+}
+
+.form-field input[aria-invalid="true"] {
   border-color: var(--clr-accent-500);
 }
 
-.form-container form .form-footer {
-  background-color: var(--clr-white);
-  margin-top: auto;
-  padding: 1.5em 1em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.btn-back.hidden {
-  visibility: hidden;
-}
+/* =====================
+   BUTTONS
+===================== */
+
 .btn {
-  border-radius: 5px;
+  border: none;
+  border-radius: 8px;
   font-weight: var(--fw-medium);
-  padding: 1em 1.5em;
+  padding: 0.875rem 1.5rem;
+  transition: all 0.2s ease;
+  font-size: 1rem;
 }
-.btn.btn-next {
+
+.btn-back {
+  background: transparent;
+  color: var(--clr-neutral-500);
+  font-weight: var(--fw-medium);
+  padding: 0.875rem 0;
+}
+
+.btn-back:hover {
+  color: var(--clr-neutral-900);
+}
+
+.btn-next {
   background-color: var(--clr-primary-900);
   color: var(--clr-white);
 }
 
-/* =====================
-   Media Queries!!!!!!!
-===================== */
-@media (max-width: 767px) {
-  .sidebar-nav .steps {
-    display: flex;
-    justify-content: center;
-    gap: 1.5em;
-    list-style: none;
-  }
+.btn-next:hover {
+  opacity: 0.9;
 }
+
+.btn-next:active {
+  transform: translateY(1px);
+}
+
+.btn-submit {
+  background-color: var(--clr-primary-600);
+  color: var(--clr-white);
+}
+
+.btn-submit:hover {
+  opacity: 0.9;
+}
+
+.btn-back.hidden,
+button[hidden] {
+  visibility: hidden;
+}
+
+/* =====================
+   FORM FOOTER
+===================== */
+
+.form-footer {
+  background-color: var(--clr-white);
+  margin-top: auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =====================
+   RESPONSIVE - DESKTOP
+===================== */
+
 @media (min-width: 768px) {
   body {
-    min-height: 100vh;
     display: grid;
     place-items: center;
-  }
-  .form-container {
-    width: 100%;
-    max-width: 58rem;
-    min-height: 80vh;
-    background-color: var(--clr-white);
-    padding: 1em;
-    margin: 0 auto;
-    border-radius: 12px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    padding: 2rem;
   }
 
-  .form-container aside.sidebar-nav {
+  .form-container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    min-height: 600px;
+    background-color: var(--clr-white);
+    padding: 1rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    grid-template-columns: 274px 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  /* Sidebar */
+  .sidebar-nav {
     background-image: url(../assets/images/bg-sidebar-desktop.svg);
     background-position: center;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
+    min-height: auto;
   }
-  .form-container .sidebar-nav .steps {
-    display: flex;
+
+  .steps {
     flex-direction: column;
-    gap: 2em;
+    gap: 2rem;
+    justify-content: flex-start;
   }
-  .form-container .sidebar-nav .steps li {
+
+  .steps li {
     display: flex;
     align-items: center;
-    gap: 1em;
+    gap: 1rem;
   }
-  .sidebar-nav .steps .step-info {
+
+  .step-info {
     display: flex;
     flex-direction: column;
+    gap: 0.25rem;
     text-transform: uppercase;
   }
-  .sidebar-nav .steps .step-info .step-title {
+
+  .step-info .step-title {
     font-weight: var(--fw-medium);
+    font-size: 0.875rem;
     color: var(--clr-white);
+    letter-spacing: 0.05em;
   }
-  .form-container form .form-body .step-desc {
-    margin-bottom: 2em;
+
+  /* Form */
+  form {
+    padding: 2.5rem 3rem 1.5rem 2.5rem;
+    justify-content: space-between;
   }
-  .form-container form .form-body {
-    padding-right: 0;
+
+  .form-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 0;
+    padding: 0;
     width: 100%;
+    max-width: 450px;
+    box-shadow: none;
   }
-  .form-container form .form-footer {
-    padding-right: 0;
+
+  .step-title {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-desc {
+    margin-bottom: 2.5rem;
+  }
+
+  .form-field + .form-field {
+    margin-top: 1.5rem;
+  }
+
+  .form-footer {
+    padding: 0;
+    margin-top: 2rem;
+    background: transparent;
+    max-width: 450px;
   }
 }

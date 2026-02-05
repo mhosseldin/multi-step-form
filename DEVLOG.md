@@ -73,3 +73,35 @@ Next step is sending the current code to Claude Sonnet for a review to see:
 
 - what structural or styling changes it suggests
 - and which of those changes are actually worth applying
+
+## Dev Log – CSS Refactor
+
+After reading the CSS review, I decided to take the full refactor instead of fixing small things one by one.
+
+The CSS before was working, but there were parts that would probably cause problems later:
+
+- selectors were too deep and hard to follow
+- spacing in the form depended on fragile values
+- the desktop layout didn’t feel right compared to the design
+
+---
+
+## What changed
+
+- Reduced selector nesting and relied more on direct class selectors.
+- Adjusted the desktop layout so the form content is vertically centered instead of stuck at the top.
+- Added a max width for the form content so inputs don’t get too wide on large screens.
+- Removed `nth-of-type` spacing and replaced it with simpler spacing rules that work for any number of fields.
+- Cleaned up button styles and separated behavior for:
+  - Back
+  - Next
+  - Submit
+- Changed how step indicators are centered (using flex instead of line-height).
+- Added a subtle shadow to the mobile card so it stands out from the background.
+
+---
+
+This refactor didn’t change the overall idea or structure.  
+It mainly made the CSS cleaner and easier to continue working on.
+
+Next step is styling steps 2–5.
