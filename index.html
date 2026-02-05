@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&family=Ubuntu:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
 
@@ -38,7 +38,7 @@
 
             <li>
               <span class="step-indicator" aria-hidden="true">2</span>
-              <div class="step-info desktop-only">
+              <div class="step-info">
                 <span class="step-eyebrow">Step 2</span>
                 <span class="step-title">Select plan</span>
               </div>
@@ -46,7 +46,7 @@
 
             <li>
               <span class="step-indicator" aria-hidden="true">3</span>
-              <div class="step-info desktop-only">
+              <div class="step-info">
                 <span class="step-eyebrow">Step 3</span>
                 <span class="step-title">Add-ons</span>
               </div>
@@ -54,7 +54,7 @@
 
             <li>
               <span class="step-indicator" aria-hidden="true">4</span>
-              <div class="step-info desktop-only">
+              <div class="step-info">
                 <span class="step-eyebrow">Step 4</span>
                 <span class="step-title">Summary</span>
               </div>
@@ -355,13 +355,18 @@
 
         <!-- Form Navigation Footer -->
         <div class="form-footer">
-          <button type="button" class="btn-back" data-action="prev" hidden>
+          <button type="button" class="btn-back hidden" data-action="prev">
             Go Back
           </button>
-          <button type="button" class="btn-next" data-action="next">
+          <button type="button" class="btn btn-next" data-action="next">
             Next Step
           </button>
-          <button type="submit" class="btn-submit" data-action="submit" hidden>
+          <button
+            type="submit"
+            class="btn btn-submit"
+            data-action="submit"
+            hidden
+          >
             Confirm
           </button>
         </div>

@@ -59,3 +59,17 @@ I went through the suggestions and applied the ones that made sense for this sta
 - Marked decorative elements with `aria-hidden="true"`
 
 ---
+
+# Dev Log – UI Implementation Check
+
+I tried to match the UI as closely as possible based on the provided design images.
+
+The layout and spacing are mostly there, but it’s not pixel-perfect.  
+That’s expected since I’m working without the original Figma file and relying only on static screenshots.
+
+At this point, the goal was to get the structure, proportions, and overall feel right rather than chasing exact pixels.
+
+Next step is sending the current code to Claude Sonnet for a review to see:
+
+- what structural or styling changes it suggests
+- and which of those changes are actually worth applying
