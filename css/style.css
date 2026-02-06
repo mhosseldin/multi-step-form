@@ -32,12 +32,19 @@
   --lh-base: 1.5;
 
   /* =====================
-     SPACING
+     SPACING & LAYOUT
   ===================== */
 
   --container-max-width: 62rem;
   --border-radius: 10px;
   --border-radius-lg: 12px;
+
+  /* =====================
+     TRANSITIONS
+  ===================== */
+
+  --transition-base: 0.2s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* =====================
@@ -128,6 +135,15 @@ input::placeholder {
   font-size: 0.875rem;
 }
 
+.error-message:not(:empty) {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.error-message:empty {
+  display: none;
+}
+
 /* =====================
    LAYOUT - FORM CONTAINER
 ===================== */
@@ -174,8 +190,8 @@ input::placeholder {
   font-weight: var(--fw-bold);
   font-size: 0.875rem;
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .steps li[aria-current="step"] .step-indicator {
@@ -260,7 +276,7 @@ form {
   color: var(--clr-neutral-900);
   font-weight: var(--fw-medium);
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--transition-base);
 }
 
 .form-field input:hover {
@@ -284,8 +300,13 @@ form {
   border-radius: 8px;
   font-weight: var(--fw-medium);
   padding: 0.875rem 1.5rem;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   font-size: 1rem;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--clr-primary-600);
+  outline-offset: 3px;
 }
 
 .btn-back {
@@ -326,55 +347,83 @@ button[hidden] {
   visibility: hidden;
 }
 
-/******** STEP 2 ********/
-.form-step .plans {
+/* =====================
+   STEP 2 - PLAN SELECTION
+===================== */
+
+.plans {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
+  gap: 0.75rem;
 }
-input[type="radio"] {
+
+/* Hide plan radio inputs accessibly */
+.plan-card input[type="radio"] {
   position: absolute;
-  opacity: 0;
-  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
-.plans .plan-card {
+
+.plan-card {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 1em;
-  padding: 1em;
-  border-radius: 0.75em;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
   cursor: pointer;
   border: 1px solid var(--clr-neutral-200);
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+  background-color: var(--clr-white);
+  transition: all var(--transition-base);
 }
+
 .plan-card:hover {
   border-color: var(--clr-primary-600);
+  background-color: var(--clr-neutral-50);
 }
+
+.plan-card:focus-within {
+  outline: 2px solid var(--clr-primary-600);
+  outline-offset: 2px;
+}
+
 .plan-card:has(input:checked) {
   border-color: var(--clr-primary-600);
   background-color: var(--clr-neutral-100);
-  outline: none;
 }
-.plan-card .plan-details {
+
+.plan-icon {
+  flex-shrink: 0;
+}
+
+.plan-details {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
 }
-.plan-details .plan-name {
+
+.plan-name {
   color: var(--clr-neutral-900);
   font-weight: var(--fw-bold);
+  font-size: 1rem;
 }
-.plan-details .plan-price {
+
+.plan-price {
   color: var(--clr-neutral-500);
+  font-size: 0.875rem;
 }
-.plan-details .plan-bonus {
-  color: var(--clr-primary-600);
-  font-size: 0.85rem;
+
+.plan-bonus {
+  color: var(--clr-neutral-900);
+  font-size: 0.75rem;
 }
+
 /* =====================
    BILLING TOGGLE
 ===================== */
@@ -389,18 +438,21 @@ input[type="radio"] {
   border-radius: 0.5rem;
   margin-top: 2rem;
 }
+
 .toggle-label {
   font-weight: var(--fw-bold);
   font-size: 0.875rem;
   color: var(--clr-neutral-500);
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color var(--transition-base);
   user-select: none;
 }
+
 .billing-toggle:has(#billing-monthly:checked) label[for="billing-monthly"],
 .billing-toggle:has(#billing-yearly:checked) label[for="billing-yearly"] {
   color: var(--clr-primary-900);
 }
+
 .toggle-switch {
   position: relative;
   width: 2.75rem;
@@ -410,6 +462,7 @@ input[type="radio"] {
   cursor: pointer;
   flex-shrink: 0;
 }
+
 .toggle-switch input[type="radio"] {
   position: absolute;
   width: 1px;
@@ -421,6 +474,7 @@ input[type="radio"] {
   white-space: nowrap;
   border: 0;
 }
+
 .toggle-slider {
   position: absolute;
   top: 50%;
@@ -430,79 +484,89 @@ input[type="radio"] {
   height: 0.75rem;
   background-color: var(--clr-white);
   border-radius: 50%;
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: left var(--transition-smooth);
   pointer-events: none;
 }
+
 .toggle-switch:has(#billing-yearly:checked) .toggle-slider {
   left: calc(100% - 0.75rem - 0.25rem);
 }
+
 .toggle-switch input[type="radio"]:focus-visible ~ .toggle-slider {
   box-shadow: 0 0 0 3px var(--clr-primary-200);
 }
+
 .toggle-switch:hover {
   opacity: 0.9;
 }
 
-/********* STEP 3 *********/
+/* =====================
+   STEP 3 - ADD-ONS
+===================== */
+
 .addons-list {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.75rem;
 }
-.addons-list .addon-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1em;
-  background-color: #f8f9fe;
-  border: 1px solid var(--clr-primary-600);
-  padding: 1em;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.addon-card .addon-details {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 300px;
-}
-.addon-details .addon-title {
-  font-weight: var(--fw-bold);
-  color: var(--clr-neutral-900);
-}
-.addon-card .addon-price {
-  color: var(--clr-primary-600);
-}
+
 .addon-card input[type="checkbox"] {
   position: absolute;
-  opacity: 0;
-  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
+
+.addon-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--clr-white);
+  border: 1px solid var(--clr-neutral-200);
+  padding: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.addon-card:hover {
+  border-color: var(--clr-primary-600);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.addon-card:focus-within {
+  outline: 2px solid var(--clr-primary-600);
+  outline-offset: 2px;
+}
+
+.addon-card:has(input:checked) {
+  background-color: var(--clr-neutral-100);
+  border-color: var(--clr-primary-600);
+}
+
 .addon-check {
   width: 1.25rem;
   height: 1.25rem;
-
   border: 1px solid var(--clr-neutral-200);
   border-radius: 0.25rem;
   background-color: var(--clr-white);
-
   display: grid;
   place-items: center;
-
   flex-shrink: 0;
+  transition: all var(--transition-base);
 }
+
 .addon-check img {
   width: 0.65rem;
   height: 0.5rem;
   opacity: 0;
   transform: scale(0.5);
-  transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
-}
-.addon-card:has(input:checked) {
-  background-color: var(--clr-neutral-100);
-  border-color: var(--clr-primary-600);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .addon-card:has(input:checked) .addon-check {
@@ -515,68 +579,158 @@ input[type="radio"] {
   transform: scale(1);
 }
 
-/********* STEP 4 *********/
+.addon-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.addon-title {
+  font-weight: var(--fw-bold);
+  font-size: 0.875rem;
+  color: var(--clr-neutral-900);
+}
+
+.addon-desc {
+  font-size: 0.875rem;
+  color: var(--clr-neutral-500);
+}
+
+.addon-price {
+  color: var(--clr-primary-600);
+  font-size: 0.875rem;
+  font-weight: var(--fw-medium);
+  flex-shrink: 0;
+}
+
+/* =====================
+   STEP 4 - SUMMARY
+===================== */
+
 .summary-card {
   display: flex;
   flex-direction: column;
-  background-color: #f8f9fe;
-  padding: 1em;
+  background-color: var(--clr-neutral-50);
+  padding: 1rem;
   border-radius: 10px;
 }
+
 .summary-plan {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.summary-plan + hr {
-  margin: 0.5em 0;
-  background-color: var(--clr-neutral-500);
+
+.summary-card hr {
+  border: none;
+  height: 1px;
+  background-color: var(--clr-neutral-200);
+  margin: 1rem 0;
 }
-.summary-plan .plan-name,
+
+.summary-plan .plan-name {
+  color: var(--clr-neutral-900);
+  font-weight: var(--fw-bold);
+}
+
+.summary-plan .plan-period {
+  color: var(--clr-neutral-500);
+  font-weight: var(--fw-regular);
+}
+
 .summary-plan .plan-price {
   color: var(--clr-neutral-900);
   font-weight: var(--fw-bold);
 }
+
 .plan-info {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
-.summary-plan .change-btn {
+
+.change-btn {
   background-color: transparent;
   border: none;
   text-decoration: underline;
-  text-align: left;
   color: var(--clr-neutral-500);
+  font-size: 0.875rem;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--transition-base);
 }
+
+.change-btn:hover {
+  color: var(--clr-primary-600);
+}
+
+.change-btn:focus-visible {
+  outline: 2px solid var(--clr-primary-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 .addons-summary .addon-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 0.3em;
+  padding-top: 0.75rem;
 }
-.addon-item .addon-price {
-  color: var(--clr-primary-900);
+
+.addons-summary dt {
+  color: var(--clr-neutral-500);
+  font-size: 0.875rem;
+  font-weight: var(--fw-regular);
 }
+
+.addons-summary .addon-price {
+  color: var(--clr-neutral-900);
+  font-size: 0.875rem;
+  font-weight: var(--fw-regular);
+}
+
 .total {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
-  padding: 0 1rem;
-}
-.total .total-price {
-  color: var(--clr-primary-600);
-  font-weight: var(--fw-bold);
+  margin-top: 1.5rem;
+  padding: 1.25rem 1rem;
 }
 
-/********* STEP 5 *********/
+.total-label {
+  color: var(--clr-neutral-500);
+  font-size: 0.875rem;
+}
+
+.total-price {
+  color: var(--clr-primary-600);
+  font-weight: var(--fw-bold);
+  font-size: 1.125rem;
+}
+
+/* =====================
+   STEP 5 - THANK YOU
+===================== */
+
 .thank-you {
   text-align: center;
-  padding: 2.5em 0;
+  padding: 2.5rem 0;
 }
+
+.thank-you img {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+}
+
 #thank-you-title {
-  margin: 1rem 0;
+  margin-bottom: 1rem;
+}
+
+.thank-you p {
+  line-height: 1.6;
+  max-width: 450px;
+  margin: 0 auto;
 }
 
 /* =====================
@@ -663,7 +817,7 @@ input[type="radio"] {
     margin: 0;
     padding: 0;
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     box-shadow: none;
   }
 
@@ -684,15 +838,34 @@ input[type="radio"] {
     padding: 0;
     margin-top: 2rem;
     background: transparent;
-    max-width: 450px;
+    max-width: 500px;
   }
 
-  .form-step .plans {
+  .plans {
     flex-direction: row;
+    gap: 1rem;
   }
-  .plans .plan-card {
+
+  .plan-card {
+    flex: 1;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.5em;
+    gap: 2.5rem;
+    min-height: 180px;
+    justify-content: space-between;
+  }
+}
+
+/* =====================
+   REDUCED MOTION
+===================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

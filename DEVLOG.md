@@ -105,3 +105,15 @@ This refactor didn’t change the overall idea or structure.
 It mainly made the CSS cleaner and easier to continue working on.
 
 Next step is styling steps 2–5.
+
+---
+
+### CSS completed
+
+Finished the full CSS for the multi-step form.  
+Next step is sending the code for a senior review and iterating based on feedback.
+
+Senior review received.
+
+Went through the feedback and noted a few things that need fixing (step visibility, addon defaults, focus handling, and button states).
+Next step is applying the fixes and cleaning up the CSS.
