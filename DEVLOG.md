@@ -117,3 +117,43 @@ Senior review received.
 
 Went through the feedback and noted a few things that need fixing (step visibility, addon defaults, focus handling, and button states).
 Next step is applying the fixes and cleaning up the CSS.
+
+---
+
+### JavaScript – Step Navigation & Core Logic
+
+Started working on the JavaScript logic for the multi-step form.
+
+I focused first on step navigation before touching validation or pricing:
+
+- show step 1 by default
+- hide all other steps
+- move forward with Next
+- move backward with Back
+
+I selected the main DOM elements (steps, sidebar items, buttons, and the form) and used a single event listener on the form with event delegation to keep things simple and scalable.
+
+One early challenge was handling step indexing:
+the form steps are 1-based, while JS arrays are 0-based.
+After fixing a few off-by-one mistakes, step transitions started behaving correctly.
+
+I added helper functions to:
+
+- switch steps
+- update `aria-current` in the sidebar
+- control button visibility (Back / Next / Submit)
+
+Then I moved to validation:
+
+- Step 1: name, email, phone
+- Step 2: plan selection
+
+Each validation updates the UI and saves valid data into a single `formState` object.
+
+Billing toggle logic was handled using `data-*` attributes to update plan and addon prices without hardcoding values.
+
+Add-ons selection and summary logic are in place:
+the structure works, but the summary still needs some cleanup and refinement.
+
+Overall, the core JS structure is now solid.
+Next step is refining the summary step and polishing edge cases.

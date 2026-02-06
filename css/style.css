@@ -342,8 +342,7 @@ form {
   opacity: 0.9;
 }
 
-.btn-back.hidden,
-button[hidden] {
+.btn-back.hidden {
   visibility: hidden;
 }
 
@@ -638,7 +637,7 @@ button[hidden] {
   font-weight: var(--fw-regular);
 }
 
-.summary-plan .plan-price {
+.summary-plan .cur-plan-price {
   color: var(--clr-neutral-900);
   font-weight: var(--fw-bold);
 }
