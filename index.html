@@ -67,7 +67,7 @@
       <form novalidate>
         <div class="form-body">
           <!-- Step 1: Personal Info -->
-          <fieldset class="form-step" data-step="1">
+          <fieldset class="form-step" data-step="1" hidden>
             <legend class="step-title">Personal info</legend>
             <p class="step-desc">
               Please provide your name, email address, and phone number.
@@ -207,28 +207,31 @@
             </div>
 
             <div class="billing-toggle">
-              <span id="billing-label" class="sr-only">Billing period</span>
-              <label for="billing-monthly" class="toggle-option">
+              <label for="billing-monthly" class="toggle-label">
+                <span class="toggle-text">Monthly</span>
+              </label>
+
+              <div class="toggle-switch">
                 <input
                   type="radio"
                   id="billing-monthly"
                   name="billing"
                   value="monthly"
                   checked
-                  aria-describedby="billing-label"
+                  aria-label="Select monthly billing"
                 />
-                <span>Monthly</span>
-              </label>
-
-              <label for="billing-yearly" class="toggle-option">
                 <input
                   type="radio"
                   id="billing-yearly"
                   name="billing"
                   value="yearly"
-                  aria-describedby="billing-label"
+                  aria-label="Select yearly billing"
                 />
-                <span>Yearly</span>
+                <span class="toggle-slider" aria-hidden="true"></span>
+              </div>
+
+              <label for="billing-yearly" class="toggle-label">
+                <span class="toggle-text">Yearly</span>
               </label>
             </div>
           </fieldset>
@@ -243,6 +246,13 @@
             <div class="addons-list">
               <label class="addon-card">
                 <input type="checkbox" name="addons" value="online-service" />
+                <span class="addon-check">
+                  <img
+                    src="./assets/images/icon-checkmark.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </span>
                 <span class="addon-details">
                   <span class="addon-title">Online service</span>
                   <span class="addon-desc">Access to multiplayer games</span>
@@ -257,6 +267,13 @@
 
               <label class="addon-card">
                 <input type="checkbox" name="addons" value="larger-storage" />
+                <span class="addon-check">
+                  <img
+                    src="./assets/images/icon-checkmark.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </span>
                 <span class="addon-details">
                   <span class="addon-title">Larger storage</span>
                   <span class="addon-desc">Extra 1TB of cloud save</span>
@@ -271,6 +288,13 @@
 
               <label class="addon-card">
                 <input type="checkbox" name="addons" value="custom-profile" />
+                <span class="addon-check">
+                  <img
+                    src="./assets/images/icon-checkmark.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </span>
                 <span class="addon-details">
                   <span class="addon-title">Customizable profile</span>
                   <span class="addon-desc">Custom theme on your profile</span>
@@ -334,7 +358,6 @@
           <section
             class="form-step thank-you"
             data-step="5"
-            hidden
             aria-labelledby="thank-you-title"
           >
             <img
