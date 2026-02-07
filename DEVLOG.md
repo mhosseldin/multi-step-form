@@ -156,4 +156,50 @@ Add-ons selection and summary logic are in place:
 the structure works, but the summary still needs some cleanup and refinement.
 
 Overall, the core JS structure is now solid.
-Next step is refining the summary step and polishing edge cases.
+Next step is reviewing the code and fixing the weak points.
+
+---
+
+### JavaScript – Applying Review Feedback
+
+After finishing the main logic, I reviewed feedback from a senior code review.
+
+The review highlighted a few gaps that I missed in the first pass, especially around accessibility, UX details, and some state handling issues.
+
+Based on the feedback, I implemented the following changes:
+
+- Fixed a bug where the billing toggle (Monthly / Yearly) did not update the UI because change events were missing.
+- Added `aria-invalid="true"` for invalid inputs instead of relying on alerts.
+- Removed `alert()` usage and switched to inline error messages.
+- Removed the shared `errorMsgs` array and used specific error elements by ID.
+- Implemented navigation back to Step 2 when clicking the "Change" button in the Summary.
+- Added focus management when moving between steps by focusing the step heading.
+- Implemented the final submit flow by showing the Step 5 "Thank you" screen.
+- Removed `formState.totalPrice` and moved total price calculation into the summary rendering logic.
+
+After these changes, the flow felt more consistent and closer to real-world usage.
+
+---
+
+### JavaScript – Summary Bug & Partial Rendering
+
+While finishing the JavaScript logic, I ran into an annoying bug in the Summary step.
+
+The problem showed up when moving from Step 4 (Summary) back to Step 3, then going to Step 4 again.
+Sometimes the app crashed, and other times the prices just didn’t show up.
+
+At first, the error message made it look like `periodText` was the issue.
+After debugging, I realized the real problem was simpler:
+some Summary DOM elements were not always available when `renderSummary()` was running.
+
+I tried adding defensive checks, but my first attempt stopped the whole render if _any_ element was missing.
+That fixed the crash, but caused the UI to stop updating completely.
+
+The final solution was switching to partial rendering.
+Instead of exiting early, each part of the Summary now updates only if its DOM element exists.
+This way, missing elements don’t block the rest of the UI from rendering.
+
+This approach fixed both the crash and the missing prices issue,
+and made the Summary step stable when navigating back and forth between steps.
+
+At this point, the full form flow is working as expected.
