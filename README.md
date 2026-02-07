@@ -2,7 +2,7 @@
 
 A responsive, accessible multi-step form built with vanilla HTML, CSS, and JavaScript.
 
-This project focuses on building a realistic user onboarding flow while handling state, validation, accessibility, and edge cases without relying on frameworks.
+This project focuses on building a realistic user onboarding flow while handling state, validation, accessibility, and edge cases.
 
 ## 🎯 Why This Project Exists
 
@@ -35,6 +35,22 @@ No frameworks were used on purpose, to focus on core browser APIs and problem-so
 - Editable summary with a “Change” shortcut
 - Keyboard and screen-reader friendly navigation
 - Client-side persistence using `localStorage`
+
+## 📊 Performance & Accessibility
+
+The project was audited using Lighthouse on both desktop and mobile.
+Since this is a single-page, multi-step form, the audit focuses on the
+initial entry point (Step 1), which represents the main page load.
+
+Lighthouse scores:
+
+- Performance: 100
+- Accessibility: 96
+- Best Practices: 100
+- SEO: 90
+
+Additional accessibility testing was done manually across all steps,
+including keyboard navigation, focus management, and ARIA attributes.
 
 ## 🏗️ Architecture & Decisions
 
