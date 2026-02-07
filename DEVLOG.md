@@ -117,3 +117,89 @@ Senior review received.
 
 Went through the feedback and noted a few things that need fixing (step visibility, addon defaults, focus handling, and button states).
 Next step is applying the fixes and cleaning up the CSS.
+
+---
+
+### JavaScript – Step Navigation & Core Logic
+
+Started working on the JavaScript logic for the multi-step form.
+
+I focused first on step navigation before touching validation or pricing:
+
+- show step 1 by default
+- hide all other steps
+- move forward with Next
+- move backward with Back
+
+I selected the main DOM elements (steps, sidebar items, buttons, and the form) and used a single event listener on the form with event delegation to keep things simple and scalable.
+
+One early challenge was handling step indexing:
+the form steps are 1-based, while JS arrays are 0-based.
+After fixing a few off-by-one mistakes, step transitions started behaving correctly.
+
+I added helper functions to:
+
+- switch steps
+- update `aria-current` in the sidebar
+- control button visibility (Back / Next / Submit)
+
+Then I moved to validation:
+
+- Step 1: name, email, phone
+- Step 2: plan selection
+
+Each validation updates the UI and saves valid data into a single `formState` object.
+
+Billing toggle logic was handled using `data-*` attributes to update plan and addon prices without hardcoding values.
+
+Add-ons selection and summary logic are in place:
+the structure works, but the summary still needs some cleanup and refinement.
+
+Overall, the core JS structure is now solid.
+Next step is reviewing the code and fixing the weak points.
+
+---
+
+### JavaScript – Applying Review Feedback
+
+After finishing the main logic, I reviewed feedback from a senior code review.
+
+The review highlighted a few gaps that I missed in the first pass, especially around accessibility, UX details, and some state handling issues.
+
+Based on the feedback, I implemented the following changes:
+
+- Fixed a bug where the billing toggle (Monthly / Yearly) did not update the UI because change events were missing.
+- Added `aria-invalid="true"` for invalid inputs instead of relying on alerts.
+- Removed `alert()` usage and switched to inline error messages.
+- Removed the shared `errorMsgs` array and used specific error elements by ID.
+- Implemented navigation back to Step 2 when clicking the "Change" button in the Summary.
+- Added focus management when moving between steps by focusing the step heading.
+- Implemented the final submit flow by showing the Step 5 "Thank you" screen.
+- Removed `formState.totalPrice` and moved total price calculation into the summary rendering logic.
+
+After these changes, the flow felt more consistent and closer to real-world usage.
+
+---
+
+### JavaScript – Summary Bug & Partial Rendering
+
+While finishing the JavaScript logic, I ran into an annoying bug in the Summary step.
+
+The problem showed up when moving from Step 4 (Summary) back to Step 3, then going to Step 4 again.
+Sometimes the app crashed, and other times the prices just didn’t show up.
+
+At first, the error message made it look like `periodText` was the issue.
+After debugging, I realized the real problem was simpler:
+some Summary DOM elements were not always available when `renderSummary()` was running.
+
+I tried adding defensive checks, but my first attempt stopped the whole render if _any_ element was missing.
+That fixed the crash, but caused the UI to stop updating completely.
+
+The final solution was switching to partial rendering.
+Instead of exiting early, each part of the Summary now updates only if its DOM element exists.
+This way, missing elements don’t block the rest of the UI from rendering.
+
+This approach fixed both the crash and the missing prices issue,
+and made the Summary step stable when navigating back and forth between steps.
+
+At this point, the full form flow is working as expected.
